@@ -1,0 +1,31 @@
+name: Delphi Build on PR
+
+on:
+  pull_request:
+    branches:
+      - main  # Ou outra branch principal do seu repositório
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar ambiente Delphi
+        run: |
+          echo "Configurando Delphi..."
+          # Adicione aqui os comandos para configurar o ambiente se necessário
+
+      - name: Compilar projeto Delphi
+        run: |
+          echo "Compilando o projeto..."
+          "C:\Program Files (x86)\Embarcadero\Studio\22.0\bin\dcc32.exe" -B -Q "caminho\para\seu\projeto.dpr"
+
+      - name: Verificar sucesso da compilação
+        run: |
+          if not exist "caminho\para\seu\executavel.exe" (
+            echo "Erro: O build falhou!" >&2
+            exit 1
+          )
